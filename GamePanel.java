@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements ActionListener{
     private Timer timer;
-    private final int DELAY = 11;
+    private final int DELAY = 5;
     private GeneticAlgorithm genetic;
     private boolean running;
     private int count;
@@ -51,6 +51,7 @@ public class GamePanel extends JPanel implements ActionListener{
         g2d.setColor(Color.white);
         genetic.drawRockets(g2d);
         drawTargetRed(g2d, 50);
+        genetic.drawNoGo(g2d);
         
     }
 

@@ -4,13 +4,15 @@ public class Rocket extends Sprite{
     public Vector2D[] velArr;
 
     public Vector2D vel;
-    private int WIDTH = 20;
-    private int LENGTH = 30;
-    private double SPEED = 1.0;
+    private int WIDTH = 10;
+    private int LENGTH = 15;
+    private double SPEED = 0.5;
     public int id;
+    public boolean alive;
     
     public Rocket(double x, double y, int steps) {
         super(x, y);
+        this.alive = true;
         this.vel = Vector2D.ZERO();
         this.velArr = new Vector2D[steps];
         for(int i = 0; i < steps; i++) {
@@ -22,11 +24,12 @@ public class Rocket extends Sprite{
         super(x, y);
         this.vel = Vector2D.ZERO();
         this.velArr = velArr;
+        this.alive = true;
     }
 
     public double calculateFitness(Vector2D target) {
         double dist = Vector2D.dist(new Vector2D(x, y), target);
-        return dist * dist;
+        return alive ? 20 / (dist * dist) : 1 / (dist * dist);
     }
  
     public void add(int x, int y) {
@@ -34,9 +37,8 @@ public class Rocket extends Sprite{
     }
 
     public void move() {
-        Vector2D norm = vel.norm();
-        x += norm.x * SPEED;
-        y += norm.y * SPEED;
+        x += vel.x * SPEED;
+        y += vel.y * SPEED;
     }
  
     public Polygon getShape() {
@@ -60,6 +62,21 @@ public class Rocket extends Sprite{
 
     public void setVel(Vector2D vec, int index) {
         this.velArr[index] = vec;
+    }
+
+    public void kill() {
+        this.alive = false;
+    }
+
+    public boolean outOfBounds() {
+        if(x < 0 || y < 0 || x > 1000 || y > 800) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean dead() {
+        return !alive;
     }
 
 }

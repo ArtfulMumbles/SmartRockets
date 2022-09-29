@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 public class SmartRockets extends JFrame {
 
     public SmartRockets() {
-
+        System.out.println("Starting Smart Rockets!");
         initUI();
     }
     
